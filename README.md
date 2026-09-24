@@ -10,11 +10,6 @@ The pipeline scrapes city data from Wikipedia using BeatifulSoup, pulls weather 
 
 Everything runs off of a single notebook (`notebooks/pipeline.ipynb`), all the different functions split into modules in `src/`. This is a design choice by me for good or bad. The guided project assumes everything should be done in one notebook + a SQL script, the latter of which is done through MySQL connections. This choice is mostly driven by me wanting to learn how to do the architecture this way - both in regards to submodules and pushing commands into SQL from Python scrips.
 
-## Key questions
-
-- What ways do I have for pulling data off of the web?
-- How should I store the data in SQL? Accounting for tables that are somewhat fixed, and some that grow with timestamps?
-- How can a pipeline be made safe to rerun, so collecting new data is a single notebook run?
 
 ## Technologies
 
@@ -128,21 +123,6 @@ ETL/
 ├── notebooks/
     └── pipeline.ipynb   master notebook that runs the whole pipeline
 ```
-
-## Key Results
-
-- A working, rerunnable ETL pipeline over three sources: one notebook run loads the current weather for all 12 cities, the forecast for the next 5 days (480 rows) and the next day's arrivals.
-- One day of arrivals: 5,742 flights at 23 airports. London alone receives 1,561 arrivals, more than Berlin, Hamburg, Prague and Stockholm combined, followed by Paris (990) and Frankfurt (645). Kiruna receives 3.
-
-### Known limitations and next steps
-
-- Airport assignment by radius inflates some cities and includes dead or minor airports.
-- Flights are a schedule snapshot. With `INSERT IGNORE`, the first stored version of a flight is kept.
-- Forecast revisions are not kept. Because `weather_forecast` uses `(city_id, forecast_for)` as its primary key, only the first forecast retrieved for a given time slot is stored. The idea pitched was that this would be a weekly run.
-- Population is fixed, no children are ever born. `city_pop` has one row per city, so a new scrape does not update the figure.
-- The free AeroDataBox plan has a monthly limit.
-- The pipeline is run manually. The next step would be converting `pipeline.ipynb` into a script and running it on a schedule (cron, or a cloud), which would be pretty simple due to the architecture of the project - but some thought may have to go into when to run which parts.
-- The scrapers depend on Wikipedia's layout can easily break.
 
 ## Author
 
