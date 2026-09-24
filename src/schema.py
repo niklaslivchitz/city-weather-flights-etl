@@ -70,6 +70,28 @@ TABLES = [
         PRIMARY KEY (city_id, forecast_for),
         FOREIGN KEY (city_id) REFERENCES cities(city_id)
     )""",
+        """CREATE TABLE IF NOT EXISTS airports (
+        icao          VARCHAR(4) NOT NULL,
+        iata          VARCHAR(3),
+        airport_name  VARCHAR(255),
+        city_id       INT NOT NULL,
+        PRIMARY KEY (icao),
+        FOREIGN KEY (city_id) REFERENCES cities(city_id)
+    )""",
+    """CREATE TABLE IF NOT EXISTS flights (
+        arrival_icao       VARCHAR(4) NOT NULL,
+        flight_number      VARCHAR(20) NOT NULL,
+        scheduled_arrival  DATETIME NOT NULL,
+        revised_arrival    DATETIME,
+        origin_icao        VARCHAR(4),
+        origin_name        VARCHAR(255),
+        airline            VARCHAR(255),
+        aircraft_model     VARCHAR(100),
+        status             VARCHAR(50),
+        retrieved_at       DATETIME NOT NULL,
+        PRIMARY KEY (arrival_icao, flight_number, scheduled_arrival),
+        FOREIGN KEY (arrival_icao) REFERENCES airports(icao)
+    )""",
 ]
 
 
