@@ -1,0 +1,13 @@
+.env
+/archive
+
+# Python
+__pycache__/
+*.pyc
+
+# virtual environments
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/

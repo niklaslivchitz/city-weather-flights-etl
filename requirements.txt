@@ -1,0 +1,8 @@
+pandas
+requests
+beautifulsoup4
+sqlalchemy
+pymysql
+python-dotenv
+lat-lon-parser
+jupyter
